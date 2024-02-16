@@ -15,7 +15,6 @@
                 <li><a href="menu.html">Menu</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="login.html">Login</a></li>
             </ul>
         </nav>
     </header>
@@ -23,7 +22,7 @@
         <section id="login">
             <div class="container">
                 <h2>Login</h2>
-                <form action="#" method="post">
+                <form id="loginForm">
                     <label for="username">Username:</label>
                     <input type="text" id="username" name="username" required>
                     <label for="password">Password:</label>
@@ -37,5 +36,29 @@
         <p>&copy; 2024 Dream Delight Restaurant. All rights reserved.</p>
     </footer>
     <script src="script.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+            const formData = new FormData(this); // Get form data
+
+            // Send form data to server using fetch API
+            fetch('/login', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Redirect to dashboard or home page on successful login
+                    window.location.href = '/dashboard.html';
+                } else {
+                    // Display error message or handle unsuccessful login
+                    console.error('Login failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
 </body>
 </html>
