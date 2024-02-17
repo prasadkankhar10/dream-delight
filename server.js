@@ -9,24 +9,27 @@ const PORT = process.env.PORT || 3000;
 // Middleware to parse JSON body
 app.use(bodyParser.json());
 
-// Mock user data (replace with database logic in a real application)
-const users = [
-    { username: 'user1', password: 'password1' },
-    { username: 'user2', password: 'password2' }
-];
+// Serve static files from the 'public' directory
+app.use(express.static(__dirname + '/public'));
 
-// Login endpoint
-app.post('/login', (req, res) => {
-    const { username, password } = req.body;
+// Homepage route
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/public/index.html');
+});
 
-    // Find user in the mock data
-    const user = users.find(user => user.username === username && user.password === password);
+// Menu page route
+app.get('/menu', (req, res) => {
+    res.sendFile(__dirname + '/public/menu.html');
+});
 
-    if (user) {
-        res.status(200).json({ message: 'Login successful', user });
-    } else {
-        res.status(401).json({ message: 'Invalid username or password' });
-    }
+// About page route
+app.get('/about', (req, res) => {
+    res.sendFile(__dirname + '/public/about.html');
+});
+
+// Contact page route
+app.get('/contact', (req, res) => {
+    res.sendFile(__dirname + '/public/contact.html');
 });
 
 // Start the server
